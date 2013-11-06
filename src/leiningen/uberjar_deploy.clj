@@ -49,7 +49,7 @@
 (defn get-password-from-m2-xml [id] (zx/xml-> (create-zip (get-m2-settings-xml)) :servers :server [:id id] :password zx/text))
 
 (defn get-repo-values [project name-to-find]
-  (filter (fn[x](= name-to-find (first x))) (:deploy-repositories project))
+  (filter (fn[x](= name-to-find (first x))) (:repositories project))
 )
 
 (defn get-repo-value [project value]
@@ -72,18 +72,18 @@
   )
 )
 
-(defn confirm-deploy-repo-defined-in-project [project]
+(defn confirm-repo-defined-in-project [project]
   (if (nil? (get-repo-value project :url))
-    (abort (format ":url not found for \"%s\" entry in project's :deploy-repositories" (get-target project)))
+    (abort (format ":url not found for \"%s\" entry in project's :repositories" (get-target project)))
   )
 
   (if (nil? (get-repo-value project :id))
-    (abort (format ":id not found for \"%s\" entry in project's :deploy-repositories" (get-target project)))
+    (abort (format ":id not found for \"%s\" entry in project's :repositories" (get-target project)))
   )
 )
 
 (defn specify-credentials [project] 
-  {:deploy-repositories 
+  {:repositories 
    [
     ["snapshots" {:username (get-username-from-m2-xml (get-repo-value project :id)) :password (get-password-from-m2-xml (get-repo-value project :id))}]
     ["releases"  {:username (get-username-from-m2-xml (get-repo-value project :id)) :password (get-password-from-m2-xml (get-repo-value project :id))}]
@@ -94,17 +94,17 @@
 )
 
 (defn check-config [project]
-  (confirm-deploy-repo-defined-in-project project)
+  (confirm-repo-defined-in-project project)
   (check-m2-settings-file project)
 )
 
 (defn uberjar-deploy
   "Deploy project's uberjar and pom.xml. 
 
-A :deploy-repositories entry must be present in the project.clj, containing the
+A :repositories entry must be present in the project.clj, containing the
 snapshots and releases :url locations. For example,
 
-  :deploy-repositories [
+  :repositories [
     [\"snapshots\" {:id \"nexus\" :url \"http://host:8081/nexus/content/repositories/snapshots\"}]
     [\"releases \" {:id \"nexus\" :url \"http://host:8081/nexus/content/repositories/releases\"}]
                        ]
