@@ -7,10 +7,5 @@
                  [org.clojure/data.xml "0.0.7"]
                  [org.clojure/data.zip "0.1.1"]
                ]
-      :deploy-repositories [
-                                                      ["snapshots" {:id "nexus" :url "http://mercurial:8081/nexus/content/repositories/snapshots"}]
-                                                      ["releases"  {:sign-releases false :id "nexus" :url "http://mercurial:8081/nexus/content/repositories/releases"}]
-                                                     ] 
-
 )
 
