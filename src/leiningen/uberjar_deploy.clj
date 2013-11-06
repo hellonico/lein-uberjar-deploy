@@ -109,9 +109,13 @@ snapshots and releases :url locations. For example,
   :repositories [
     [\"snapshots\" {:id \"nexus\" :url \"http://host:8081/nexus/content/repositories/snapshots\"}]
     [\"releases \" {:id \"nexus\" :url \"http://host:8081/nexus/content/repositories/releases\"}]
-                       ]
-  
+  ]
+
 Snapshots or releases is chosen based on the version in the project.clj.
+
+Note that Leiningen will try to sign releases by default; this may be turned off by adding 
+\":sign-releases false\" to the \"releases\" map.
+(see https://github.com/technomancy/leiningen/blob/master/doc/GPG.md)
 
 The :id must match a server specified in ~/.m2/settings.xml, from which the username and password 
 are obtained."
