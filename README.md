@@ -5,7 +5,13 @@ A Leiningen plugin to create and deploy an uberjar and associated pom.xml.
 ## Usage
   
 Put `[lein-uberjar-deploy "0.1.0"]` into the `:plugins` vector of your project.clj, modified to the
-current version.
+current version. For example:
+
+    :plugins 
+    [
+      [theladders/lein-uberjar-deploy "0.1.0"]
+    ]
+
   
 Add `snapshots` and `releases` entries to the `:repositories` vector of your project.clj. For example,
 
