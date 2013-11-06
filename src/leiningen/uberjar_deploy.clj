@@ -11,6 +11,8 @@
     [clojure.data.zip.xml :as zx])
 )
 
+; TODO: support for :deploy-repositories as well as :repositories?
+
 ; E.g., com.theladders
 (defn get-group [project] (format "%s" (project :group)))
 ; E.g., bigproject
