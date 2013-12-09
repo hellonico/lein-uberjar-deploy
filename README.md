@@ -7,19 +7,13 @@ A Leiningen plugin to create and deploy an uberjar and associated pom.xml.
 Put `[lein-uberjar-deploy "0.1.0"]` into the `:plugins` vector of your project.clj, modified to the
 current version. For example:
 
-    :plugins 
-    [   
-      [theladders/lein-uberjar-deploy "0.1.0"]
-    ]
+    :plugins [[theladders/lein-uberjar-deploy "0.1.0"]]
 
   
 Add `snapshots` and `releases` entries to the `:repositories` vector of your project.clj. For example,
 
-    :repositories
-    [
-      ["snapshots" {:id "nexus" :url "http://host:8081/nexus/content/repositories/snapshots"}]
-      ["releases"  {:id "nexus" :url "http://host:8081/nexus/content/repositories/releases"}]
-    ]
+    :repositories [["snapshots" {:id "nexus" :url "http://host:8081/nexus/content/repositories/snapshots"}]
+                   ["releases"  {:id "nexus" :url "http://host:8081/nexus/content/repositories/releases"}]]
 
 Note that Leiningen will try to [sign releases](https://github.com/technomancy/leiningen/blob/master/doc/GPG.md) by default; this may be turned off by adding `:sign-releases false` to the `releases` map.
 
