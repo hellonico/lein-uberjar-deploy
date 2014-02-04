@@ -1,5 +1,6 @@
-(defproject theladders/lein-uberjar-deploy "0.1.3"
+(defproject theladders/lein-uberjar-deploy "0.1.4"
   :description "Create and Deploy uberjar."
+  :url "https://github.com/TheLadders/lein-uberjar-deploy"
   :license {:name "MIT"
             :url "http://www.opensource.org/licenses/mit-license.php"}
   :eval-in-leiningen true
