@@ -1,4 +1,4 @@
-(defproject theladders/lein-uberjar-deploy "0.1.3-SNAPSHOT"
+(defproject theladders/lein-uberjar-deploy "0.1.3"
   :description "Create and Deploy uberjar."
   :license {:name "MIT"
             :url "http://www.opensource.org/licenses/mit-license.php"}
