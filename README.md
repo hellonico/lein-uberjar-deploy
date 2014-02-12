@@ -9,10 +9,10 @@ Leiningen's built-in deploy task (`lein deploy`) deploys a standard, non-uberjar
         
 ## Usage
   
-Put `[lein-uberjar-deploy "0.1.4"]` into the `:plugins` vector of your project.clj, modified to the
+Put `[lein-uberjar-deploy "1.0.0"]` into the `:plugins` vector of your project.clj, modified to the
 current version. For example:
 
-    :plugins [[theladders/lein-uberjar-deploy "0.1.4"]]
+    :plugins [[theladders/lein-uberjar-deploy "1.0.0"]]
 
   
 Add `snapshots` and `releases` entries to the `:repositories` vector of your project.clj. For example,
