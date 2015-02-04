@@ -1,5 +1,6 @@
 (ns leiningen.uberjar-deploy
   (:use
+    [clojure.pprint]
     [leiningen.uberjar :only [uberjar]]
     [leiningen.deploy :only [deploy]]
     [leiningen.pom :only [pom]])
@@ -66,14 +67,21 @@
   (if (nil? (get-repo-value project :id))
     (abort (format ":id not found for \"%s\" entry in project's :repositories" (get-target project)))))
 
+(defn p-with [p profiles]
+  (leiningen.core.project/project-with-profiles-meta
+  p
+  (merge profiles (:profiles p))))
+
 (defn specify-credentials [project] 
-  {:repositories 
+  {:uberjardeploy 
+   {:repositories 
    [
     ["snapshots" {:username (get-username-from-m2-xml (get-repo-value project :id)) :password (get-password-from-m2-xml (get-repo-value project :id))}]
-    ["releases"  {:username (get-username-from-m2-xml (get-repo-value project :id)) :password (get-password-from-m2-xml (get-repo-value project :id))}]]})
+    ["releases"  {:username (get-username-from-m2-xml (get-repo-value project :id)) :password (get-password-from-m2-xml (get-repo-value project :id))}]]}})
 
 (defn merge-credentials-into-project [project]
-    (leiningen.core.project/merge-profiles project [(specify-credentials project)]))
+   (leiningen.core.project/merge-profiles 
+     (p-with project (specify-credentials project))  [:uberjardeploy]))
 
 (defn check-config [project]
   (confirm-repo-defined-in-project project)
