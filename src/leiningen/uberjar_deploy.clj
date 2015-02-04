@@ -73,8 +73,11 @@
   (merge profiles (:profiles p))))
 
 (defn specify-credentials [project] 
-  {:uberjardeploy 
-   {:repositories 
+  {:uberjarpom {:dependencies ^:replace {}} 
+    ; no more dependencies}
+   :uberjardeploy 
+   {
+    :repositories 
    [
     ["snapshots" {:username (get-username-from-m2-xml (get-repo-value project :id)) :password (get-password-from-m2-xml (get-repo-value project :id))}]
     ["releases"  {:username (get-username-from-m2-xml (get-repo-value project :id)) :password (get-password-from-m2-xml (get-repo-value project :id))}]]}})
@@ -82,6 +85,11 @@
 (defn merge-credentials-into-project [project]
    (leiningen.core.project/merge-profiles 
      (p-with project (specify-credentials project))  [:uberjardeploy]))
+
+(defn update-dependencies [project]
+  (leiningen.core.project/merge-profiles 
+     project  
+     [:uberjarpom]))
 
 (defn check-config [project]
   (confirm-repo-defined-in-project project)
@@ -109,8 +117,14 @@ are obtained."
 
   [project & args]
   (check-config project)
-  (let [project (merge-credentials-into-project project)]
+  (let [
+    project (merge-credentials-into-project project)
+    has-pom (not (nil? (first args)))
+    pom-file (if has-pom (first args) get-pom-file-path)
+    ]
     (uberjar project)
-    (pom project)
-    (deploy project (get-target project) (get-group-and-name project) (get-version project) (get-uberjar-file-path project) get-pom-file-path)))
+    (clojure.pprint/pprint (update-dependencies project))
+    (if (not has-pom) (pom project))
+    (println "Using pom:" pom-file)
+    (deploy project (get-target project) (get-group-and-name project) (get-version project) (get-uberjar-file-path project) pom-file)))
 
